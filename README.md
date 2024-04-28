@@ -7,7 +7,7 @@ This is a software used to group your files via filename (no ext) and regex, the
 `D:\\debug\\regex_pics_del.exe "^([\w]{1,})([#\w]{0,})" "D:\\Downloads\\UI_Codex\\"`
 
 ### regex:
-`^([\w]{{1,}})([#\w]{{0,}})`
+`^([\w]{1,})([#\w]{0,})`
 
 ### Pics_list:
 ```
@@ -42,3 +42,5 @@ D:\Downloads\UI_Codex\UI_Codex_Scenery_CYCengYanJuYuanZhu.png 789kb
 D:\Downloads\UI_Codex\UI_Codex_PhotoDisplayStand_08#2592427.png
 D:\Downloads\UI_Codex\UI_Codex_Scenery_CYCengYanJuYuanZhu#3239116.png
 ```
+### Tips:
+Recommand https://regex101.com/ to check the regex.
