@@ -7,24 +7,24 @@ use std::{env, fs, fs::metadata, path::PathBuf};
 
 fn main() {
     /* let mut args: Vec<String> = env::args().collect();
-    args.push(String::from("([\\w]{1,})([#\\w]{0,})"));
-    args.push(String::from("1"));
+    args.push(String::from("([\\w]{1,})([\\w]{1,})_([#\\w]{0,})"));
+    args.push(String::from("1,2"));
     args.push(String::from("D:\\Downloads\\UI_Codex\\")); */
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 4 {
         //Help info
         println!("\nDelete Pics via Regex");
-        println!("version 1.4\n");
+        println!("version 1.5\n");
         println!("This is a software used to group your files via filename (no ext) and regex, then remove duplicates with each group.\n");
         println!("Usage:");
-        println!("{} <Regex> <directory>\n", &args[0]);
+        println!("{} <Regex> <Group(s)> <directory>\n", &args[0]);
         println!("Example:");
         print!("{} ", &args[0]);
-        print!("\"^([\\w]{{1,}})([#\\w]{{0,}})\" ");
-        print!("\"1\" ");
+        print!("\"^([\\w]{{1,}})_([\\w]{{1,}})([#\\w]{{0,}})\" ");
+        print!("\"1,2\" ");
         println!("\"D:\\Downloads\\UI_Codex\\\"\n");
-        println!("The command would group the following names in \"UI_Codex_Scenery_DQ2wanglongcun\" group, and remove duplicates and small files.");
+        println!("The command would collect the following names in \"UI_Codex_SceneryDQ2wanglongcun\" group, then remove duplicates and small files.");
         println!("UI_Codex_Scenery_DQ2wanglongcun#55720");
         println!("UI_Codex_Scenery_DQ2wanglongcun#2349d02");
         println!("UI_Codex_Scenery_DQ2wanglongcun");
@@ -79,13 +79,6 @@ fn check_path_dir(mut path_to_check: PathBuf) -> (bool, PathBuf) {
 
 fn path_group(dir_path: &PathBuf, reg: &Regex, need_match: &Vec<u8>) -> Vec<Vec<PathBuf>> {
     //定义正则
-    //
-    //输入
-    //UI_Codex_Scenery_DQ2wanglongcun#55720.png
-    //UI_Codex_Scenery_DQ2wanglongcun.png
-    //输出group1
-    //UI_Codex_Scenery_DQ2wanglongcun
-
     let mut i: u32 = 0;
     let mut groups: Vec<Vec<PathBuf>> = vec![vec![]];
     let mut groups_dict: HashMap<String, u32> = HashMap::new();
