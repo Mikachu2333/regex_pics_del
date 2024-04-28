@@ -8,19 +8,21 @@ use std::{env, fs, fs::metadata, path::PathBuf};
 fn main() {
     /* let mut args: Vec<String> = env::args().collect();
     args.push(String::from("([\\w]{1,})([#\\w]{0,})"));
+    args.push(String::from("1"));
     args.push(String::from("D:\\Downloads\\UI_Codex\\")); */
     let args: Vec<String> = env::args().collect();
 
-    if args.len() < 3 {
+    if args.len() < 4 {
         //Help info
         println!("\nDelete Pics via Regex");
-        println!("version 1.3\n");
+        println!("version 1.4\n");
         println!("This is a software used to group your files via filename (no ext) and regex, then remove duplicates with each group.\n");
         println!("Usage:");
         println!("{} <Regex> <directory>\n", &args[0]);
         println!("Example:");
         print!("{} ", &args[0]);
         print!("\"^([\\w]{{1,}})([#\\w]{{0,}})\" ");
+        print!("\"1\" ");
         println!("\"D:\\Downloads\\UI_Codex\\\"\n");
         println!("The command would group the following names in \"UI_Codex_Scenery_DQ2wanglongcun\" group, and remove duplicates and small files.");
         println!("UI_Codex_Scenery_DQ2wanglongcun#55720");
@@ -30,8 +32,13 @@ fn main() {
         return;
     }
     let input_regex = Regex::new(&args[1]).expect("Error regex.");
-    let input_path: PathBuf = PathBuf::from(&args[2]);
-    println!("{}, {:?}",input_regex,input_path);
+    let input_match_string = String::from(&args[2]);
+    let input_match: Vec<u8> = input_match_string
+        .split(',')
+        .map(|x| x.parse().unwrap())
+        .collect();
+    let input_path: PathBuf = PathBuf::from(&args[3]);
+    println!("{}, {:?}, {:?}", input_regex, input_match, input_path);
 
     let (input_is_dir, checked_path) = check_path_dir(input_path);
     if !input_is_dir {
@@ -40,7 +47,7 @@ fn main() {
 
     //开始遍历，先分组处理整合
     #[allow(unused_variables)]
-    let grouped_files: Vec<Vec<PathBuf>> = path_group(&checked_path, &input_regex);
+    let grouped_files: Vec<Vec<PathBuf>> = path_group(&checked_path, &input_regex, &input_match);
 
     /* //检查是否成功归类
     for m in &grouped_files {
@@ -70,7 +77,7 @@ fn check_path_dir(mut path_to_check: PathBuf) -> (bool, PathBuf) {
     (path_to_check.is_dir(), path_to_check)
 }
 
-fn path_group(dir_path: &PathBuf, reg: &Regex) -> Vec<Vec<PathBuf>> {
+fn path_group(dir_path: &PathBuf, reg: &Regex, need_match: &Vec<u8>) -> Vec<Vec<PathBuf>> {
     //定义正则
     //
     //输入
@@ -90,7 +97,10 @@ fn path_group(dir_path: &PathBuf, reg: &Regex) -> Vec<Vec<PathBuf>> {
         //正则匹配（不应该出现不符和的情况的实际上）
         if reg.is_match(file_name) {
             let reg_results = reg.captures(file_name).unwrap();
-            let key_name = reg_results.get(1).unwrap().as_str().to_string();
+            let mut key_name = String::new();
+            for i in need_match {
+                key_name.push_str(reg_results.get(*i as usize).unwrap().as_str());
+            }
 
             //字典里面是否已有对应
             if !groups_dict.contains_key(&key_name) {
