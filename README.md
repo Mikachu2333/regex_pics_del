@@ -4,10 +4,10 @@ This is a software used to group your files via filename (no ext) and regex, the
 
 ## Example:
 ### Command:
-`D:\\debug\\regex_pics_del.exe "^([\w]{1,})([#\w]{0,})" "D:\\Downloads\\UI_Codex\\"`
+`D:\\debug\\regex_pics_del.exe "^([\w]{1,})_([\w]{1,})([#\w]{0,})" "1,2" "D:\\Downloads\\UI_Codex\\"`
 
 ### regex:
-`^([\w]{1,})([#\w]{0,})`
+`^([\w]{1,})_([\w]{1,})([#\w]{0,})`
 
 ### Pics_list:
 ```
@@ -24,12 +24,14 @@ D:\Downloads\UI_Codex\UI_Codex_Scenery_CYCengYanJuYuanZhu.png
 ### Grouped:
 ```
 ---
-UI_Codex_PhotoDisplayStand
+UI_CodexPhotoDisplayStand08
+---
 D:\Downloads\UI_Codex\UI_Codex_PhotoDisplayStand_08.png  7712kb
 D:\Downloads\UI_Codex\UI_Codex_PhotoDisplayStand_08#2592427.png  8800kb
 
 ---
-UI_Codex_Scenery_CYCengYanJuYuanZhu
+UI_Codex_SceneryCYCengYanJuYuanZhu
+---
 D:\Downloads\UI_Codex\UI_Codex_Scenery_CYCengYanJuYuanZhu#18435810.png  123kb
 D:\Downloads\UI_Codex\UI_Codex_Scenery_CYCengYanJuYuanZhu#2187382.png  456kb
 D:\Downloads\UI_Codex\UI_Codex_Scenery_CYCengYanJuYuanZhu#2557.png  678kb
