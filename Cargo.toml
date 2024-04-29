@@ -12,6 +12,6 @@ opt-level = "z"
 strip = true
 
 [dependencies]
-data-encoding = "2.5.0"
-regex = { version = "1.10.4" }
+data-encoding = "2.6.0"
+regex = "1.10.4"
 sha3 = "0.10.8"
